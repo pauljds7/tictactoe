@@ -1,0 +1,29 @@
+:root {
+}
+
+html {
+    font-size: 100%;
+}
+
+body {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-content: center;
+    align-items: center;
+}
+
+#container-outer {
+    border: 1px solid black;
+    display: flex;
+    justify-content: center;
+}
+
+#container-inner {
+    width: 60vw;
+    height: 60vh;
+
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    grid-template-rows: 1fr 1fr 1fr;
+}
