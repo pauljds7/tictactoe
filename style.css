@@ -20,10 +20,21 @@ body {
 }
 
 #container-inner {
-    width: 60vw;
-    height: 60vh;
+    width: 50vh;
+    height: 50vh;
 
     display: grid;
     grid-template-columns: 1fr 1fr 1fr;
     grid-template-rows: 1fr 1fr 1fr;
+}
+
+.play-btn {
+    font-size: 5rem;
+}
+
+.play-btn button:disabled,
+button[disabled]{
+  border: 1px solid #999999;
+  background-color: white;
+  color: black;
 }
