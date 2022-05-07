@@ -1,4 +1,6 @@
 :root {
+    --hover-color:#89CFF0;
+    --outline-hover-color: blue;
 }
 
 html {
@@ -14,14 +16,14 @@ body {
 }
 
 #container-outer {
-    border: 1px solid black;
     display: flex;
     justify-content: center;
 }
 
 #container-inner {
-    width: 50vh;
-    height: 50vh;
+    width: 54vh;
+    height: 54vh;
+    border: 2px solid black;
 
     display: grid;
     grid-template-columns: 1fr 1fr 1fr;
@@ -29,7 +31,13 @@ body {
 }
 
 .play-btn {
+    border: 1px solid black;
     font-size: 5rem;
+}
+
+.play-btn:hover{
+    background-color: var(--hover-color);
+    border-color: var(--outline-hover-color);
 }
 
 .play-btn button:disabled,
