@@ -37,22 +37,32 @@ function updateBoard(element, id) {
         currentPlayer = 1;
     }
     
-    if (testing) {console.log(boardState);}
     
-    checkForWin();
+    winningSquares = checkForWin();
+    if (testing) {console.log(boardState);}
+    if (testing && winningSquares) {console.log(winningSquares);}
+
+    if (winningSquares) {
+        for (let square of winningSquares) {
+            allButtons[square].style.border = '2px solid Red';
+        }
+    }
+
     element.disabled = true;
 }
 
+//Check for winning state
 function checkForWin() {
     //Horizontal lines
     //Testing works by building separate array of row column values and testing it for universal equality
     for (let row = 0; row < dims[0]; row++) {
         const test = [];
         for (let col = 0; col < dims[1]; col++) {
-            test.push(boardState[row * dims[1]+col])
+            const adress = row * dims[1]+col;
+            test.push([boardState[adress],adress])
         }
-        if (test.every(elem => elem === test[0])  && test[0] !== 0) {
-            console.log('Winner')
+        if (test.every(elem => elem[0] === test[0][0])  && test[0][0] !== 0) {
+            return Array.from(test, elem => elem[1])
         }
     }
     //Vertical lines
@@ -60,10 +70,11 @@ function checkForWin() {
     for (let col = 0; col < dims[1]; col++) {
         const test = [];
         for (let row = 0; row < dims[1]; row++) {
-            test.push(boardState[row * dims[1]+col])
+            const adress = row * dims[1]+col;
+            test.push([boardState[adress], adress])
         }
-        if (test.every(elem => elem === test[0])  && test[0] !== 0) {
-            console.log('Winner')
+        if (test.every(elem => elem[0] === test[0][0])  && test[0][0] !== 0) {
+            return Array.from(test, elem => elem[1])
         }
     }
     //Diagonal lines
@@ -72,20 +83,22 @@ function checkForWin() {
     for (let diag = 0; diag < numDiagonal; diag++) {
         const test = [];
         for (let elem = 0; elem < dims[0]; elem++) {
-            test.push(boardState[elem * dims[0] + elem + diag])
+            const adress = elem * dims[0] + elem + diag;
+            test.push([boardState[adress], adress])
         }
-        if (test.every(elem => elem === test[0])  && test[0] !== 0) {
-            console.log('Winner')
+        if (test.every(elem => elem[0] === test[0][0])  && test[0][0] !== 0) {
+            return Array.from(test, elem => elem[1])
         }
     }
     //Forward diagonal
     for (let diag = 0; diag < numDiagonal; diag++) {
         const test = [];
         for (let elem = 0; elem < dims[0]; elem++) {
-            test.push(boardState[elem * dims[0] + dims[1] - elem - 1 - diag])
+            const adress = elem * dims[0] + dims[1] - elem - 1 - diag;
+            test.push([boardState[adress],adress])
         }
-        if (test.every(elem => elem === test[0])  && test[0] !== 0) {
-            console.log('Forward diagonal Winner')
+        if (test.every(elem => elem[0] === test[0][0])  && test[0][0] !== 0) {
+            return Array.from(test, elem => elem[1])
         }
     }
 }
