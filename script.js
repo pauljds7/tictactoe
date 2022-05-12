@@ -7,6 +7,7 @@ const testing = true;
 const boardState = Array(dims[0] * dims[1]).fill(0);
 let currentPlayer = 1;
 const result = document.getElementById('result');
+const playAgain = document.getElementById('play-again');
 const allButtons = document.getElementsByClassName('play-btn');
 //Initialize the listeners for the 9 tic tac toe buttons(cells)
 for (let i = 0; i < allButtons.length; i++) {
@@ -16,12 +17,24 @@ for (let i = 0; i < allButtons.length; i++) {
         }
     );
 }
+//Initialize the listener for play again button
+playAgain.addEventListener('click', 
+    () => {
+        resetGame();
+    }
+)
 
 function onClick(element, id){
     updateBoard(element, id);
 }
 
-function updateAll(state) {
+function updateAll(fun){
+    for (let btn of allButtons) {
+        fun(btn);
+    }
+}
+
+function disableAll(state) {
     for (let btn of allButtons) {
         btn.disabled = state;
     }
@@ -52,7 +65,21 @@ function checkForEnd() {
             allButtons[square].style.border = '2px solid Red';
         }
         result.innerText = "Winner is Player " + (currentPlayer === 2 ? "I with Os" : "II with Xs");
+        disableAll(true);
     }
+}
+
+function resetGame() {
+    currentPlayer = 1;
+    for (let i = 0; i < dims[0] * dims[1]; i++) {
+        boardState[i] = 0;
+    }
+    updateAll(btn => {
+        btn.innerText = "";
+        btn.disabled = false;
+        btn.style.border = "1px solid black";
+    })
+    result.innerText = "";
 }
 
 //Check for winning state
